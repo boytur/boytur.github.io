@@ -47,3 +47,22 @@ const sectionObserver = new IntersectionObserver(
 );
 
 sections.forEach((s) => sectionObserver.observe(s));
+
+// Theme toggle (dark default, choice persisted)
+const themeToggle = document.getElementById("theme-toggle");
+function setTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  try {
+    localStorage.setItem("theme", theme);
+  } catch (e) {
+    /* storage unavailable */
+  }
+  themeToggle.setAttribute(
+    "aria-label",
+    theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+  );
+}
+themeToggle.addEventListener("click", () => {
+  setTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light");
+});
+setTheme(document.documentElement.dataset.theme || "dark");
